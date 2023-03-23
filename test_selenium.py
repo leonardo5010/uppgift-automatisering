@@ -11,18 +11,17 @@ class MinaTester(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Chrome("C:\Program Files (x86)\chromedriver.exe")
         self.driver.get("https://www.mediamarkt.se/")
-        self.driver.implicitly_wait(100)
+        self.driver.implicitly_wait(10)
         self.driver.maximize_window()
         self.driver.find_element(By.CSS_SELECTOR,"body > div.gdpr-cookie-layer.gdpr-cookie-layer--show > div > div.gdpr-cookie-layer__lower-section > div.gdpr-cookie-layer__submit-buttons > button.gdpr-cookie-layer__btn.gdpr-cookie-layer__btn--submit.gdpr-cookie-layer__btn--submit--all").click()
 
-    def test_kundservice_telefonnummer(self):
+    def test_kundservice_(self):
         self.driver.find_element(By.XPATH, '//*[@id="rise-header"]/div[1]/nav[1]/ul/li[1]/a').click()
-        self.driver.execute_script("scrollBy(0,1000)")
-        self.driver.find_element(By.XPATH, '//*[@id="rn_ContactChannels_16"]/ul/li[4]/a/span[2]/h3').click()
-        self.driver.execute_script("scrollBy(0,200)")
-        number = self.driver.find_element(By.XPATH, '//*[@id="yui_3_18_1_6_1679332743952_6"]/div[3]/div[3]/h1').text
-        expected = 'Kontakta oss'
-        self.assertEqual(number, expected)
+        #Kundservice = self.driver.find_element(By.XPATH, '//*[@id="yui_3_18_1_6_1679582939285_6"]/div[3]/div[2]').text
+        expected = 'https://kundservice.mediamarkt.se/'
+        url = self.driver.current_url
+        self.assertEqual(url, expected) 
+
 
 # våra tjänster, det ska vara enkelt att komma till oss
     def test_vara_tjanster(self):
@@ -47,3 +46,11 @@ class MinaTester(unittest.TestCase):
         retur_aterkap = self.driver.find_element(By.XPATH, '//*[@id="servicemall"]/header/div[2]/h1').text
         expected = 'Retur / Återköp'
         self.assertEqual(retur_aterkap, expected)
+
+#Outlet hemsidan öppnas
+    def test_outlet(self):
+        self.driver.find_element(By.XPATH, '//*[@id="rise-header"]/div[1]/nav[2]/div[1]/ul/li[6]/a/span').click()
+        outlet = self.driver.find_element(By.XPATH, '//*[@id="search_campaign_outlet_1-top_right"]/div[2]/article/p').text
+        expected = 'PS. Alla produkter i Outleten är helt nya, dvs inte returer eller visningsexemplar. Välkommen att fynda!'
+        self.assertEqual(outlet, expected)
+    
