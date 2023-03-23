@@ -1,10 +1,17 @@
 pipeline {
     agent any
     stages {
-        stage('Test') {
+        stage('Testing GitHub-tests locally') {
             steps {
-                bat 'python -m unittest'
+                dir('C:/Users/L_rad/OneDrive/Skrivbord/uppgift automatisering'){ 
+                    bat 'python -m unittest'
+                }
             }
-          }
         }
-}
+        stage('Clean Workspace'){
+            steps {
+                cleanWs()
+            }
+        }
+        }
+    }
